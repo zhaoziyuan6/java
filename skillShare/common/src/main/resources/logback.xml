@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+	<!--<property name="LOG_HOME" value="${shcms.root}" />-->
+	
+	<!-- 控制台输出 -->
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+	<!-- 日志输出编码 -->
+		<encoder charset="UTF-8">
+		<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
+			<pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 按照每天生成日志文件 --> 
+	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/ddyc.log</file>
+<!-- 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter"> -->
+<!-- 			<level>DEBUG</level> -->
+<!-- 		</filter> -->
+<!-- 		<filter class="ch.qos.logback.classic.filter.LevelFilter"> -->
+<!-- 			<level>DEBUG</level> -->
+		    <!-- 用于配置符合条件的操作 -->
+<!-- 		    过滤器，执行一个过滤器会有返回个枚举值，即DENY，NEUTRAL，ACCEPT其中之一。返回DENY，日志将立即被抛弃不再经过其他过滤器；返回NEUTRAL，有序列表里的下个过滤器过接着处理日志；返回ACCEPT，日志会被立即处理，不再经过剩余过滤器 -->
+<!--       		<onMatch>ACCEPT</onMatch> -->
+      		<!-- 用于配置不符合条件的操作 -->
+<!--       		<onMismatch>DENY</onMismatch> -->
+<!-- 		</filter> -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		<!--日志文件输出的文件名-->
+			<fileNamePattern>logs/ddyc-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>12</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	
+	<logger name="com.sh.ddyc" level="debug" />
+	<!--<logger name="org.springframework" level="debug" />
+	<logger name="org.springframework.web" level="info" />-->
+	<!--<logger name="org.apache" level="debug" />-->
+	<!--<logger name="com.github.miemiedev" level="info" />-->
+	<logger name="org.mybatis.spring" level="debug" />
+	
+	<!-- -->
+	<root level="debug">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="rollingFile" />
+	</root>
+	
+</configuration>
